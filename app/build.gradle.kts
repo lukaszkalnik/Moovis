@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -18,6 +20,7 @@ android {
     }
 
     buildTypes {
+        forEach { it.buildConfigField("String", "TMDB_API_TOKEN", getLocalProperty("tmdb_api_token")) }
         getByName("release") {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -25,6 +28,27 @@ android {
     }
 
     sourceSets.getByName("main").java.srcDirs("src/main/kotlin")
+}
+
+fun getLocalProperty(name: String): String {
+    val fileName = "local.properties"
+    val propertiesFile = rootProject.file(fileName)
+
+    if (!propertiesFile.exists()) {
+        print("$fileName does not exist")
+        return ""
+    }
+
+    with(Properties()) {
+        load(FileInputStream(propertiesFile))
+        val property = get(name)
+        return if (property == null) {
+            print("Property $name not found in $fileName")
+            ""
+        } else {
+            property as String
+        }
+    }
 }
 
 dependencies {
