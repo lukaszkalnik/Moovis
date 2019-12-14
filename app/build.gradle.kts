@@ -30,6 +30,13 @@ android {
     sourceSets.getByName("main").java.srcDirs("src/main/kotlin")
 }
 
+dependencies {
+    implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
+
+    implementation("androidx.appcompat:appcompat:1.1.0")
+    implementation("com.google.android.material:material:1.2.0-alpha02")
+}
+
 fun getLocalProperty(name: String): String {
     val fileName = "local.properties"
     val propertiesFile = rootProject.file(fileName)
@@ -49,9 +56,4 @@ fun getLocalProperty(name: String): String {
             property as String
         }
     }
-}
-
-dependencies {
-    implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
-    implementation("androidx.appcompat:appcompat:1.1.0")
 }
