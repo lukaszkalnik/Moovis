@@ -9,6 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.DayNight"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <activity android:name=".presentation.MainActivity" />
+
     </application>
 
 </manifest>

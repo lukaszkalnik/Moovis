@@ -35,6 +35,9 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("com.google.android.material:material:1.2.0-alpha02")
+    implementation("com.google.android.material:material:1.2.0-alpha03")
+
+    implementation("com.github.bumptech.glide:glide:4.10.0")
 }
 
 fun getLocalProperty(name: String): String {
