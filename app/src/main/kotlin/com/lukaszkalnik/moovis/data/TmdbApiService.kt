@@ -18,7 +18,7 @@ interface TmdbApiService {
 
     companion object {
 
-        val tmdbService: TmdbApiService by lazy {
+        val instance: TmdbApiService by lazy {
 
             val authenticationInterceptor = Interceptor { chain ->
                 with(chain) {
@@ -54,7 +54,7 @@ interface TmdbApiService {
     }
 }
 
-class DefaultTmdbApiService(
+internal class DefaultTmdbApiService(
     private val tmdbApi: TmdbApi
 ) : TmdbApiService {
 

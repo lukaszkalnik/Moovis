@@ -21,7 +21,7 @@ android {
     }
 
     buildTypes {
-        forEach { it.buildConfigField("String", "TMDB_API_TOKEN", getLocalProperty("tmdb_api_token")) }
+        forEach { it.buildConfigField("String", "TMDB_API_KEY", getLocalProperty("tmdb_api_key")) }
         getByName("release") {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -40,9 +40,15 @@ android {
 dependencies {
     implementation(kotlin("stdlib-jdk8", KotlinCompilerVersion.VERSION))
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.14.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3")
 
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("com.google.android.material:material:1.2.0-alpha03")
+
+    // alpha version because of the `liveData` coroutine scope
+    val lifecycleVersion = "2.2.0-alpha01"
+    implementation("androidx.lifecycle:lifecycle-extensions:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
 
     implementation("com.github.bumptech.glide:glide:4.10.0")
     implementation("com.squareup.retrofit2:retrofit:2.7.0")

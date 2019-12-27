@@ -2,7 +2,11 @@ package com.lukaszkalnik.moovis.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.observe
 import com.lukaszkalnik.moovis.R.layout
+import com.lukaszkalnik.moovis.domain.UseCaseInjector
+import com.lukaszkalnik.moovis.presentation.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.main_popular_movies_list
 
 class MainActivity : AppCompatActivity() {
@@ -14,5 +18,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(layout.activity_main)
 
         main_popular_movies_list.adapter = moviesAdapter
+
+        val viewModel = ViewModelProviders.of(
+            this,
+            MainViewModel.Factory(
+                UseCaseInjector.getConfiguration
+            )
+        )[MainViewModel::class.java]
+        viewModel.configuration.observe(this) {
+            println("Received configuration: $it")
+        }
     }
 }
