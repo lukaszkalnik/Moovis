@@ -24,7 +24,7 @@ interface TmdbApiService {
                 with(chain) {
                     val authenticatedUrl = request().url()
                         .newBuilder()
-                        .addQueryParameter(QUERY_PARAM_API_KEY, BuildConfig.TMDB_API_TOKEN)
+                        .addQueryParameter(QUERY_PARAM_API_KEY, BuildConfig.TMDB_API_KEY)
                         .build()
 
                     val authenticatedRequest = request()
