@@ -54,6 +54,7 @@ dependencies {
     val lifecycleVersion = "2.2.0-rc03"
     implementation("androidx.lifecycle:lifecycle-extensions:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
     implementation("com.github.bumptech.glide:glide:4.10.0")
     implementation("com.squareup.retrofit2:retrofit:2.7.0")
