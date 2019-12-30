@@ -1,8 +1,9 @@
 package com.lukaszkalnik.moovis
 
 import com.lukaszkalnik.moovis.data.model.Configuration
-import com.lukaszkalnik.moovis.domain.GetConfiguration
 import com.lukaszkalnik.moovis.presentation.viewmodel.MainViewModel
+import com.lukaszkalnik.moovis.util.InstantTaskExecutorExtension
+import com.lukaszkalnik.moovis.util.MockkFunction
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -16,12 +17,14 @@ import org.junit.jupiter.api.extension.*
 @ExtendWith(InstantTaskExecutorExtension::class)
 class MainViewModelTest {
 
-    private val getConfiguration = mockk<GetConfiguration>()
+    private val getConfiguration = mockk<MockkFunction<Configuration>>()
 
-    private val viewModel = MainViewModel(
-        getConfiguration,
-        TestCoroutineDispatcher()
-    )
+    private val viewModel by lazy {
+        MainViewModel(
+            getConfiguration::invoke,
+            TestCoroutineDispatcher()
+        )
+    }
 
     @Test
     fun `when received configuration then emit configuration`() {

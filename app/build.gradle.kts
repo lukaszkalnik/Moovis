@@ -1,4 +1,3 @@
-import Version.coroutinesVersion
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
 import java.io.FileInputStream
 import java.util.Properties
@@ -16,7 +15,7 @@ android {
     defaultConfig {
         applicationId = "com.lukaszkalnik.moovis"
         minSdkVersion(23)
-        targetSdkVersion(28)
+        targetSdkVersion(29)
         versionCode = 1
         versionName = "0.1"
     }
@@ -65,7 +64,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
     testImplementation("io.mockk:mockk:1.9.3")
     testImplementation("org.assertj:assertj-core:3.14.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.coroutinesVersion}")
     testImplementation("androidx.arch.core:core-testing:2.1.0")
 }
 

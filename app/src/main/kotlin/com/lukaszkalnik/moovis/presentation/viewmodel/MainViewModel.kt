@@ -15,7 +15,9 @@ class MainViewModel(
     dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
 
-    val configuration: LiveData<Configuration> = liveData(viewModelScope.coroutineContext + dispatcher) {
+    private val coroutineContext = viewModelScope.coroutineContext + dispatcher
+
+    val configuration: LiveData<Configuration> = liveData {
         val configuration = getConfiguration()
         emit(configuration)
     }

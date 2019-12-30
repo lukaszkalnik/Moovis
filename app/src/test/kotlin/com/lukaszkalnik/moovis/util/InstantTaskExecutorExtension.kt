@@ -1,4 +1,4 @@
-package com.lukaszkalnik.moovis
+package com.lukaszkalnik.moovis.util
 
 import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.arch.core.executor.TaskExecutor
