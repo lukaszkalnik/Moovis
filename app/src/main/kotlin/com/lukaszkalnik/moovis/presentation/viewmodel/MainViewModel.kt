@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
 import com.lukaszkalnik.moovis.data.model.Configuration
 import com.lukaszkalnik.moovis.domain.GetConfiguration
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,9 +14,7 @@ class MainViewModel(
     dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
 
-    private val coroutineContext = viewModelScope.coroutineContext + dispatcher
-
-    val configuration: LiveData<Configuration> = liveData {
+    val configuration: LiveData<Configuration> = liveData(dispatcher) {
         val configuration = getConfiguration()
         emit(configuration)
     }
@@ -27,9 +24,6 @@ class MainViewModel(
     ) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T =
-            MainViewModel(
-                getConfiguration
-            ) as T
+        override fun <T : ViewModel> create(modelClass: Class<T>): T = MainViewModel(getConfiguration) as T
     }
 }
