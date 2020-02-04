@@ -6,11 +6,11 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("android.extensions")
-    id("kotlinx-serialization")
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.3.61"
 }
 
 android {
-    compileSdkVersion(28)
+    compileSdkVersion(29)
 
     defaultConfig {
         applicationId = "com.lukaszkalnik.moovis"
@@ -47,7 +47,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutinesVersion}")
 
     implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("com.google.android.material:material:1.2.0-alpha03")
+    implementation("com.google.android.material:material:1.2.0-alpha04")
 
     // rc version because of the `liveData` coroutine scope
     val lifecycleVersion = "2.2.0-rc03"

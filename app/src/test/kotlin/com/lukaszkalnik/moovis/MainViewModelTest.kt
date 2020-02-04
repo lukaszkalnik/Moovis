@@ -3,7 +3,7 @@ package com.lukaszkalnik.moovis
 import com.lukaszkalnik.moovis.data.model.Configuration
 import com.lukaszkalnik.moovis.presentation.viewmodel.MainViewModel
 import com.lukaszkalnik.moovis.util.InstantTaskExecutorExtension
-import com.lukaszkalnik.moovis.util.MockkFunction
+import com.lukaszkalnik.moovis.util.SuspendFun
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.extension.*
 @ExtendWith(InstantTaskExecutorExtension::class)
 class MainViewModelTest {
 
-    private val getConfiguration = mockk<MockkFunction<Configuration>>()
+    private val getConfiguration = mockk<SuspendFun<Configuration>>()
 
     private val viewModel by lazy {
         MainViewModel(

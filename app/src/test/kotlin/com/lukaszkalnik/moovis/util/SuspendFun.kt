@@ -1,5 +1,5 @@
 package com.lukaszkalnik.moovis.util
 
-interface MockkFunction<U> {
+interface SuspendFun<U> {
     suspend operator fun invoke(): U
 }
