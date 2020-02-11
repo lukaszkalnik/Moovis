@@ -6,7 +6,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("android.extensions")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.3.61"
+    kotlin("plugin.serialization") version "1.3.61"
 }
 
 android {

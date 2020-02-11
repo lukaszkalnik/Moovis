@@ -1,4 +1,4 @@
-package com.lukaszkalnik.moovis
+package com.lukaszkalnik.moovis.presentation.viewmodel
 
 import com.lukaszkalnik.moovis.data.model.Configuration
 import com.lukaszkalnik.moovis.presentation.viewmodel.MainViewModel
