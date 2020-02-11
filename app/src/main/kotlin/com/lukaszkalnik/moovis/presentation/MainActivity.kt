@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
                 UseCaseInjector.getConfiguration
             )
         )[MainViewModel::class.java]
+
         viewModel.configuration.observe(this) {
             println("Received configuration: $it")
         }

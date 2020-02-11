@@ -1,22 +1,30 @@
 package com.lukaszkalnik.moovis.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import com.lukaszkalnik.moovis.data.model.Configuration
 import com.lukaszkalnik.moovis.domain.GetConfiguration
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val getConfiguration: GetConfiguration,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
 
-    val configuration: LiveData<Configuration> = liveData(dispatcher) {
-        val configuration = getConfiguration()
-        emit(configuration)
+    private val _configurationLiveData = MutableLiveData<Configuration>()
+
+    val configuration: LiveData<Configuration> get() = _configurationLiveData
+
+    init {
+        viewModelScope.launch(dispatcher) {
+            val configuration = getConfiguration()
+            _configurationLiveData.postValue(configuration)
+        }
     }
 
     class Factory(
