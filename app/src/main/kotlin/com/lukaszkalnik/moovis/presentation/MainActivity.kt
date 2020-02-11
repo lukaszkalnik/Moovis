@@ -2,7 +2,7 @@ package com.lukaszkalnik.moovis.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.lukaszkalnik.moovis.R.layout
 import com.lukaszkalnik.moovis.domain.UseCaseInjector
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         main_popular_movies_list.adapter = moviesAdapter
 
-        val viewModel = ViewModelProviders.of(
+        val viewModel = ViewModelProvider(
             this,
             MainViewModel.Factory(
                 UseCaseInjector.getConfiguration
