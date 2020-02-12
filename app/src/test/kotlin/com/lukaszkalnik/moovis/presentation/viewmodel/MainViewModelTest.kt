@@ -1,7 +1,7 @@
 package com.lukaszkalnik.moovis.presentation.viewmodel
 
 import com.lukaszkalnik.moovis.data.model.Configuration
-import com.lukaszkalnik.moovis.presentation.viewmodel.MainViewModel
+import com.lukaszkalnik.moovis.presentation.MainViewModel
 import com.lukaszkalnik.moovis.util.InstantTaskExecutorExtension
 import com.lukaszkalnik.moovis.util.SuspendFun
 import io.mockk.coEvery

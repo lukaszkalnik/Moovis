@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.lukaszkalnik.moovis.R.layout
 import com.lukaszkalnik.moovis.domain.UseCaseInjector
-import com.lukaszkalnik.moovis.presentation.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.main_popular_movies_list
 
 class MainActivity : AppCompatActivity() {
