@@ -1,4 +1,4 @@
-package com.lukaszkalnik.moovis.data
+package com.lukaszkalnik.moovis.data.remote
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.lukaszkalnik.moovis.BuildConfig

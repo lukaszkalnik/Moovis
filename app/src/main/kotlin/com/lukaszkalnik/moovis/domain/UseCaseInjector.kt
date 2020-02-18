@@ -1,6 +1,6 @@
 package com.lukaszkalnik.moovis.domain
 
-import com.lukaszkalnik.moovis.data.tmdbApi
+import com.lukaszkalnik.moovis.data.remote.tmdbApi
 import com.lukaszkalnik.moovis.domain.usecase.GetConfiguration
 import com.lukaszkalnik.moovis.domain.usecase.getConfigurationFactory
 
