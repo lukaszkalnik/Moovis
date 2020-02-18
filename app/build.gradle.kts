@@ -46,6 +46,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.14.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutinesVersion}")
 
+    implementation(project(":runtime-configuration"))
+
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("com.google.android.material:material:1.2.0-alpha04")
 

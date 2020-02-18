@@ -1,0 +1,1 @@
+Runtime app configuration which requires no persistence as it's loaded every time the app starts (current locale, API configuration).

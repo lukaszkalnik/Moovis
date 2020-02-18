@@ -4,3 +4,4 @@ rootProject.apply {
 }
 
 include(":app")
+include(":runtime-configuration")
