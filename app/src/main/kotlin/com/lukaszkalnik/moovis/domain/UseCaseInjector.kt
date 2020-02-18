@@ -1,6 +1,6 @@
 package com.lukaszkalnik.moovis.domain
 
-import com.lukaszkalnik.moovis.data.remote.tmdbApi
+import com.lukaszkalnik.moovis.data.remote.TmdbApi
 import com.lukaszkalnik.moovis.domain.usecase.GetConfiguration
 import com.lukaszkalnik.moovis.domain.usecase.getConfigurationFactory
 
@@ -9,5 +9,5 @@ import com.lukaszkalnik.moovis.domain.usecase.getConfigurationFactory
  */
 object UseCaseInjector {
 
-    val getConfiguration: GetConfiguration get() = getConfigurationFactory(tmdbApi)
+    val getConfiguration: GetConfiguration get() = getConfigurationFactory(TmdbApi.instance)
 }

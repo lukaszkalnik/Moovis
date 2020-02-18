@@ -12,6 +12,8 @@ import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+private const val TMDB_API_URL = "https://api.themoviedb.org/3/"
+
 private const val QUERY_LANGUAGE = "language"
 private const val QUERY_PAGE = "page"
 private const val QUERY_REGION = "region"
@@ -27,27 +29,28 @@ interface TmdbApi {
         @Query(QUERY_PAGE) page: Int,
         @Query(QUERY_REGION) region: String
     ): MoviesPage
-}
 
-private const val TMDB_API_URL = "https://api.themoviedb.org/3/"
+    companion object {
 
-/**
- * An instance of [TmdbApi] to perform API calls.
- */
-val tmdbApi: TmdbApi by lazy {
+        /**
+         * An instance of [TmdbApi] to perform API calls.
+         */
+        val instance: TmdbApi by lazy {
 
-    val authenticatedClient = OkHttpClient.Builder()
-        .addInterceptor(authenticationInterceptor)
-        .build()
+            val authenticatedClient = OkHttpClient.Builder()
+                .addInterceptor(authenticationInterceptor)
+                .build()
 
-    val contentType = MediaType.get("application/json")
+            val contentType = MediaType.get("application/json")
 
-    Retrofit.Builder()
-        .baseUrl(TMDB_API_URL)
-        .client(authenticatedClient)
-        .addConverterFactory(Json.asConverterFactory(contentType))
-        .build()
-        .create(TmdbApi::class.java)
+            Retrofit.Builder()
+                .baseUrl(TMDB_API_URL)
+                .client(authenticatedClient)
+                .addConverterFactory(Json.asConverterFactory(contentType))
+                .build()
+                .create(TmdbApi::class.java)
+        }
+    }
 }
 
 private const val QUERY_PARAM_API_KEY = "api_key"
