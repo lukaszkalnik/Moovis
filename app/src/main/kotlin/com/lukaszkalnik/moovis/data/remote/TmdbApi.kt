@@ -3,18 +3,30 @@ package com.lukaszkalnik.moovis.data.remote
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.lukaszkalnik.moovis.BuildConfig
 import com.lukaszkalnik.moovis.data.model.Configuration
-import com.lukaszkalnik.moovis.runtimeconfiguration.RuntimeConfiguration
+import com.lukaszkalnik.moovis.data.model.MoviesPage
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.http.GET
+import retrofit2.http.Query
+
+private const val QUERY_LANGUAGE = "language"
+private const val QUERY_PAGE = "page"
+private const val QUERY_REGION = "region"
 
 interface TmdbApi {
 
     @GET("configuration")
     suspend fun getConfiguration(): Configuration
+
+    @GET("movie/popular")
+    suspend fun getPopularMovies(
+        @Query(QUERY_LANGUAGE) language: String,
+        @Query(QUERY_PAGE) page: Int,
+        @Query(QUERY_REGION) region: String
+    ): MoviesPage
 }
 
 private const val TMDB_API_URL = "https://api.themoviedb.org/3/"
@@ -26,7 +38,6 @@ val tmdbApi: TmdbApi by lazy {
 
     val authenticatedClient = OkHttpClient.Builder()
         .addInterceptor(authenticationInterceptor)
-        .addInterceptor(localizationInterceptor)
         .build()
 
     val contentType = MediaType.get("application/json")
@@ -57,26 +68,5 @@ private val authenticationInterceptor = Interceptor { chain ->
             .build()
 
         proceed(authenticatedRequest)
-    }
-}
-
-private const val QUERY_PARAM_LANGUAGE = "language"
-
-/**
- * Interceptor to request localized API responses in current user locale.
- */
-private val localizationInterceptor = Interceptor { chain ->
-    with(chain) {
-        val localizedUrl = request().url()
-            .newBuilder()
-            .addQueryParameter(QUERY_PARAM_LANGUAGE, RuntimeConfiguration.locale)
-            .build()
-
-        val localizedRequest = request()
-            .newBuilder()
-            .url(localizedUrl)
-            .build()
-
-        chain.proceed(localizedRequest)
     }
 }
