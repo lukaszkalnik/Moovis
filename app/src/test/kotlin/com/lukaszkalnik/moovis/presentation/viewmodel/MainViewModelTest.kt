@@ -1,6 +1,6 @@
 package com.lukaszkalnik.moovis.presentation.viewmodel
 
-import com.lukaszkalnik.moovis.data.model.Configuration
+import com.lukaszkalnik.moovis.data.model.TmdbConfiguration
 import com.lukaszkalnik.moovis.presentation.MainViewModel
 import com.lukaszkalnik.moovis.util.InstantTaskExecutorExtension
 import com.lukaszkalnik.moovis.util.SuspendFun
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.extension.*
 @ExtendWith(InstantTaskExecutorExtension::class)
 class MainViewModelTest {
 
-    private val getConfiguration = mockk<SuspendFun<Configuration>>()
+    private val getConfiguration = mockk<SuspendFun<TmdbConfiguration>>()
 
     private val viewModel by lazy {
         MainViewModel(
@@ -29,7 +29,7 @@ class MainViewModelTest {
     @Test
     fun `when received configuration then emit configuration`() {
         val baseUrl = "Some url"
-        val configuration = mockk<Configuration> {
+        val configuration = mockk<TmdbConfiguration> {
             every { images.baseUrl } returns baseUrl
         }
         coEvery { getConfiguration() } returns configuration

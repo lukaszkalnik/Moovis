@@ -4,14 +4,14 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Configuration(
-    val images: Images,
+data class TmdbConfiguration(
+    val images: ImagesConfiguration,
     @SerialName("change_keys")
     val changeKeys: List<String>
 )
 
 @Serializable
-data class Images(
+data class ImagesConfiguration(
     @SerialName("base_url")
     val baseUrl: String,
     @SerialName("secure_base_url")

@@ -21,12 +21,13 @@ class MainActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(
             this,
             MainViewModel.Factory(
-                UseCaseInjector.getConfiguration
+                UseCaseInjector.getConfiguration,
+                UseCaseInjector.getPopularMovies
             )
         )[MainViewModel::class.java]
 
-        viewModel.configuration.observe(this) {
-            println("Received configuration: $it")
+        viewModel.movies.observe(this) { movies ->
+            moviesAdapter.movieTiles = movies
         }
     }
 }

@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.item_view_movie_tile.view.movie_tile_image
 import kotlinx.android.synthetic.main.item_view_movie_tile.view.movie_tile_title
 
 class MovieTileAdapter(
-    private val onMovieClicked: (String) -> Unit
+    private val onMovieClicked: (Int) -> Unit
 ) : ListAdapter<MovieTileItem, ViewHolder>(DefaultDiffCallback<MovieTileItem>()) {
 
     var movieTiles = emptyList<MovieTileItem>()
@@ -33,7 +33,7 @@ class MovieTileAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         getItem(position).let { movieTile ->
             with(holder) {
-                itemView.setOnClickListener { onMovieClicked(movieTile.id.idContents) }
+                itemView.setOnClickListener { onMovieClicked(movieTile.id) }
                 title.text = movieTile.title
                 Glide.with(holder.itemView).load(movieTile.imageUri).override(200).into(image)
                 description.text = movieTile.description
