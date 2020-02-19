@@ -12,16 +12,26 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         tools:text="My Awesome Movvie 33" />
 
+    <TextView
+        android:id="@+id/movie_tile_popularity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        tools:text="20.3455" />
+
     <ImageView
         android:id="@+id/movie_tile_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:contentDescription="@null" />
 
     <TextView
         android:id="@+id/movie_tile_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         tools:text="This is a sample movie description which can be pretty long." />
 

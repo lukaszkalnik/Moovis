@@ -13,6 +13,7 @@ import com.lukaszkalnik.moovis.presentation.MovieTileAdapter.ViewHolder
 import com.lukaszkalnik.moovis.presentation.model.MovieTileItem
 import kotlinx.android.synthetic.main.item_view_movie_tile.view.movie_tile_description
 import kotlinx.android.synthetic.main.item_view_movie_tile.view.movie_tile_image
+import kotlinx.android.synthetic.main.item_view_movie_tile.view.movie_tile_popularity
 import kotlinx.android.synthetic.main.item_view_movie_tile.view.movie_tile_title
 
 class MovieTileAdapter(
@@ -29,8 +30,9 @@ class MovieTileAdapter(
             with(holder) {
                 itemView.setOnClickListener { onMovieClicked(movieTile.id) }
                 title.text = movieTile.title
-                Glide.with(holder.itemView).load(movieTile.imageUri).override(200).into(image)
+                Glide.with(holder.itemView).load(movieTile.imageUri).override(500).into(image)
                 description.text = movieTile.description
+                popularity.text = movieTile.popularity.toString()
             }
         }
     }
@@ -39,6 +41,7 @@ class MovieTileAdapter(
         val title = itemView.movie_tile_title
         val image = itemView.movie_tile_image
         val description = itemView.movie_tile_description
+        val popularity = itemView.movie_tile_popularity
     }
 }
 

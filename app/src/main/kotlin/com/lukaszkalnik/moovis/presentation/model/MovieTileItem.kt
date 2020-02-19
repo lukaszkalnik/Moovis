@@ -8,14 +8,18 @@ data class MovieTileItem(
     val id: Int,
     val title: String,
     val imageUri: String,
-    val description: String
+    val description: String,
+    val popularity: Float
 )
 
 val MoviesPage.asMovieTileItems: List<MovieTileItem>
-    get() = results.map {
-        val imagePath = AppConfig.imagesBaseUrl +
-                AppConfig.posterSizes.findCeiling(500) +
-                it.posterPath
+    get() = results
+        .sortedByDescending {
+            it.popularity
+        }.map {
+            val imagePath = AppConfig.imagesBaseUrl +
+                    AppConfig.posterSizes.findCeiling(500) +
+                    it.posterPath
 
-        MovieTileItem(it.id, it.title, imagePath, it.overview)
-    }
+            MovieTileItem(it.id, it.title, imagePath, it.overview, it.popularity)
+        }
