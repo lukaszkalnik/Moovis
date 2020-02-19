@@ -2,12 +2,14 @@ package com.lukaszkalnik.moovis.data.remote
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.lukaszkalnik.moovis.BuildConfig
-import com.lukaszkalnik.moovis.data.model.TmdbConfiguration
 import com.lukaszkalnik.moovis.data.model.MoviesPage
+import com.lukaszkalnik.moovis.data.model.TmdbConfiguration
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -39,9 +41,10 @@ interface TmdbApi {
 
             val authenticatedClient = OkHttpClient.Builder()
                 .addInterceptor(authenticationInterceptor)
+                .addInterceptor(loggingInterceptor)
                 .build()
 
-            val contentType = MediaType.get("application/json")
+            val contentType = "application/json".toMediaType()
 
             Retrofit.Builder()
                 .baseUrl(TMDB_API_URL)
@@ -60,7 +63,7 @@ private const val QUERY_PARAM_API_KEY = "api_key"
  */
 private val authenticationInterceptor = Interceptor { chain ->
     with(chain) {
-        val authenticatedUrl = request().url()
+        val authenticatedUrl = request().url
             .newBuilder()
             .addQueryParameter(QUERY_PARAM_API_KEY, BuildConfig.TMDB_API_KEY)
             .build()
@@ -73,3 +76,5 @@ private val authenticationInterceptor = Interceptor { chain ->
         proceed(authenticatedRequest)
     }
 }
+
+private val loggingInterceptor = HttpLoggingInterceptor().apply { setLevel(BODY) }

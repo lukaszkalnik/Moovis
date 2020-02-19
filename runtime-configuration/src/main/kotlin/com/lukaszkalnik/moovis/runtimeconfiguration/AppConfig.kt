@@ -46,6 +46,8 @@ inline class ImageWidth(
     }
 
     override operator fun compareTo(other: ImageWidth): Int = toInt() - other.toInt()
+
+    override fun toString(): String = width
 }
 
 /**

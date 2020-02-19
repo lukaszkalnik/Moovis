@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         )[MainViewModel::class.java]
 
         viewModel.movies.observe(this) { movies ->
-            moviesAdapter.movieTiles = movies
+            moviesAdapter.submitList(movies)
         }
     }
 }

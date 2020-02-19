@@ -19,12 +19,6 @@ class MovieTileAdapter(
     private val onMovieClicked: (Int) -> Unit
 ) : ListAdapter<MovieTileItem, ViewHolder>(DefaultDiffCallback<MovieTileItem>()) {
 
-    var movieTiles = emptyList<MovieTileItem>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         LayoutInflater.from(parent.context)
             .inflate(layout.item_view_movie_tile, parent, false)
