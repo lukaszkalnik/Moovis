@@ -1,0 +1,17 @@
+name: Master branch CI
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  test:
+    name: JUnit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: msfjarvis/setup-android@0.2
+        with:
+          gradleTasks: testDebug
