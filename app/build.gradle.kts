@@ -49,13 +49,11 @@ dependencies {
     implementation(project(":runtime-configuration"))
 
     implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("com.google.android.material:material:1.2.0-alpha04")
+    implementation("com.google.android.material:material:1.2.0-alpha05")
 
-    // rc version because of the `liveData` coroutine scope
-    val lifecycleVersion = "2.2.0-rc03"
-    implementation("androidx.lifecycle:lifecycle-extensions:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    val lifecycleVersion = "2.2.0"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
 
     implementation("com.github.bumptech.glide:glide:4.10.0")
 
