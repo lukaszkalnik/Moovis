@@ -74,10 +74,7 @@ fun getLocalProperty(name: String): String {
     val fileName = "local.properties"
     val propertiesFile = rootProject.file(fileName)
 
-    if (!propertiesFile.exists()) {
-        print("$fileName does not exist")
-        return ""
-    }
+    if (!propertiesFile.exists()) return System.getenv(name)
 
     with(Properties()) {
         load(FileInputStream(propertiesFile))
