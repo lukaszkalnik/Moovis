@@ -1,8 +1,8 @@
 package com.lukaszkalnik.moovis.presentation.model
 
 import com.lukaszkalnik.moovis.data.model.MoviesPage
-import com.lukaszkalnik.moovis.runtimeconfiguration.AppConfig
-import com.lukaszkalnik.moovis.runtimeconfiguration.findCeiling
+import com.lukaszkalnik.moovis.runtimeconfiguration.data.DefaultAppConfig
+import com.lukaszkalnik.moovis.runtimeconfiguration.data.findCeiling
 
 data class MovieTileItem(
     val id: Int,
@@ -17,8 +17,8 @@ val MoviesPage.asMovieTileItems: List<MovieTileItem>
         .sortedByDescending {
             it.popularity
         }.map {
-            val imagePath = AppConfig.imagesBaseUrl +
-                    AppConfig.posterSizes.findCeiling(500) +
+            val imagePath = DefaultAppConfig.imagesBaseUrl +
+                    DefaultAppConfig.posterSizes.findCeiling(500) +
                     it.posterPath
 
             MovieTileItem(it.id, it.title, imagePath, it.overview, it.popularity)

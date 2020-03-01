@@ -1,15 +1,19 @@
 package com.lukaszkalnik.moovis.presentation.viewmodel
 
+import com.lukaszkalnik.moovis.data.model.MoviesPage
 import com.lukaszkalnik.moovis.data.model.TmdbConfiguration
 import com.lukaszkalnik.moovis.presentation.MainViewModel
+import com.lukaszkalnik.moovis.runtimeconfiguration.data.AppConfig
+import com.lukaszkalnik.moovis.runtimeconfiguration.data.ImageWidth
 import com.lukaszkalnik.moovis.util.InstantTaskExecutorExtension
 import com.lukaszkalnik.moovis.util.SuspendFun
+import com.lukaszkalnik.moovis.util.SuspendFun1
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.*
 
@@ -18,24 +22,33 @@ import org.junit.jupiter.api.extension.*
 class MainViewModelTest {
 
     private val getConfiguration = mockk<SuspendFun<TmdbConfiguration>>()
-
-    private val viewModel by lazy {
-        MainViewModel(
-            getConfiguration::invoke,
-            TestCoroutineDispatcher()
-        )
-    }
+    // TODO make it strict again and mock and test the returned data properly
+    private val getPopularMovies = mockk<SuspendFun1<Int, MoviesPage>>(relaxed = true)
+    private val appConfig = mockk<AppConfig>(relaxUnitFun = true)
 
     @Test
-    fun `when received configuration then emit configuration`() {
+    fun `when received configuration then store configuration`() {
         val baseUrl = "Some url"
+        val posterSizes = listOf("w500", "original")
         val configuration = mockk<TmdbConfiguration> {
-            every { images.baseUrl } returns baseUrl
+            every { images.secureBaseUrl } returns baseUrl
+            every { images.posterSizes } returns posterSizes
         }
         coEvery { getConfiguration() } returns configuration
 
-        viewModel.configuration.observeForever {
-            assertThat(it.images.baseUrl).isEqualTo(baseUrl)
+        val viewModel = MainViewModel(
+            getConfiguration::invoke,
+            getPopularMovies::invoke,
+            appConfig,
+            TestCoroutineDispatcher()
+        )
+
+        verify { appConfig.imagesBaseUrl = baseUrl }
+        verify {
+            appConfig.posterSizes = listOf(
+                ImageWidth("w500"),
+                ImageWidth("original")
+            )
         }
     }
 }

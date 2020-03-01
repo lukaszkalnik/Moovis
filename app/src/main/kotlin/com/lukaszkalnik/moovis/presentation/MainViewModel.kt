@@ -9,15 +9,17 @@ import com.lukaszkalnik.moovis.domain.usecase.GetConfiguration
 import com.lukaszkalnik.moovis.domain.usecase.GetPopularMovies
 import com.lukaszkalnik.moovis.presentation.model.MovieTileItem
 import com.lukaszkalnik.moovis.presentation.model.asMovieTileItems
-import com.lukaszkalnik.moovis.runtimeconfiguration.AppConfig
-import com.lukaszkalnik.moovis.runtimeconfiguration.ImageWidth
+import com.lukaszkalnik.moovis.runtimeconfiguration.data.AppConfig
+import com.lukaszkalnik.moovis.runtimeconfiguration.data.ImageWidth
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val getConfiguration: GetConfiguration,
     private val getPopularMovies: GetPopularMovies,
+    private val appConfig: AppConfig,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
 
@@ -29,8 +31,10 @@ class MainViewModel(
         viewModelScope.launch(dispatcher) {
             val tmdbConfiguration = getConfiguration()
             with(tmdbConfiguration.images) {
-                AppConfig.imagesBaseUrl = secureBaseUrl
-                AppConfig.posterSizes = posterSizes.map { ImageWidth(it) }
+                appConfig.imagesBaseUrl = secureBaseUrl
+                appConfig.posterSizes = posterSizes.map {
+                    ImageWidth(it)
+                }
             }
 
             val movies = getPopularMovies(1)
@@ -40,13 +44,16 @@ class MainViewModel(
 
     class Factory(
         private val getConfiguration: GetConfiguration,
-        private val getPopularMovies: GetPopularMovies
+        private val getPopularMovies: GetPopularMovies,
+        private val appConfig: AppConfig
+
     ) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T = MainViewModel(
             getConfiguration,
-            getPopularMovies
+            getPopularMovies,
+            appConfig
         ) as T
     }
 }

@@ -1,24 +1,27 @@
-package com.lukaszkalnik.moovis.runtimeconfiguration
+package com.lukaszkalnik.moovis.runtimeconfiguration.data
 
-object AppConfig {
+/**
+ * App runtime configuration (not persisted) is kept here.
+ */
+interface AppConfig {
 
     /**
      * Current device locale for selecting the results language.
      * Should be in form e.g. en-US.
      */
-    var language: String = "en-US"
+    var language: String
 
     /**
      * Current device country for filtering country dependent data like release dates.
      * Should be in form e.g. `US`.
      */
-    var region: String = "US"
+    var region: String
 
     /**
      * Base url for retrieving images.
      * E.g. https://image.tmdb.org/t/p/
      */
-    var imagesBaseUrl: String = ""
+    var imagesBaseUrl: String
 
     /**
      * List of available poster sizes to include after image base url
@@ -26,7 +29,18 @@ object AppConfig {
      *
      * Include like this: https://image.tmdb.org/t/p/w500/path_to_the_image.jpg
      */
-    var posterSizes: List<ImageWidth> = emptyList()
+    var posterSizes: List<ImageWidth>
+}
+
+object DefaultAppConfig : AppConfig {
+
+    override var language: String = "en-US"
+
+    override var region: String = "US"
+
+    override var imagesBaseUrl: String = ""
+
+    override var posterSizes: List<ImageWidth> = emptyList()
 }
 
 /**
