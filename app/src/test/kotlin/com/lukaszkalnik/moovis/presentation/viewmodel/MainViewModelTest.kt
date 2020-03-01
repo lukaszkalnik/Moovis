@@ -13,7 +13,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestCoroutineScope
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.extension.*
 
@@ -36,11 +36,12 @@ class MainViewModelTest {
         }
         coEvery { getConfiguration() } returns configuration
 
+        @Suppress("UNUSED_VARIABLE")
         val viewModel = MainViewModel(
             getConfiguration::invoke,
             getPopularMovies::invoke,
             appConfig,
-            TestCoroutineDispatcher()
+            TestCoroutineScope()
         )
 
         verify { appConfig.imagesBaseUrl = baseUrl }
