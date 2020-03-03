@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.lukaszkalnik.moovis.R.layout
 import com.lukaszkalnik.moovis.domain.UseCaseInjector
-import com.lukaszkalnik.moovis.runtimeconfiguration.data.DefaultAppConfig
+import com.lukaszkalnik.moovis.presentation.model.toMovieTileItems
+import com.lukaszkalnik.moovis.runtimeconfiguration.data.AppConfig
 import kotlinx.android.synthetic.main.activity_main.main_popular_movies_list
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +25,8 @@ class MainActivity : AppCompatActivity() {
             MainViewModel.Factory(
                 UseCaseInjector.getConfiguration,
                 UseCaseInjector.getPopularMovies,
-                DefaultAppConfig
+                AppConfig.instance,
+                ::toMovieTileItems
             )
         )[MainViewModel::class.java]
 

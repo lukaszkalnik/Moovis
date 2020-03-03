@@ -5,7 +5,7 @@ import com.lukaszkalnik.moovis.domain.usecase.GetConfiguration
 import com.lukaszkalnik.moovis.domain.usecase.GetPopularMovies
 import com.lukaszkalnik.moovis.domain.usecase.getConfigurationFactory
 import com.lukaszkalnik.moovis.domain.usecase.getPopularMoviesFactory
-import com.lukaszkalnik.moovis.runtimeconfiguration.data.DefaultAppConfig
+import com.lukaszkalnik.moovis.runtimeconfiguration.data.AppConfig
 
 /**
  * Provides use cases to be injected into view models.
@@ -16,7 +16,7 @@ object UseCaseInjector {
 
     val getPopularMovies: GetPopularMovies = getPopularMoviesFactory(
         TmdbApi.instance,
-        DefaultAppConfig.language,
-        DefaultAppConfig.region
+        AppConfig.instance.language,
+        AppConfig.instance.region
     )
 }

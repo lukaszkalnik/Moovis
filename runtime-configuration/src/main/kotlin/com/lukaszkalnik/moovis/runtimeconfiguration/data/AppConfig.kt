@@ -30,9 +30,14 @@ interface AppConfig {
      * Include like this: https://image.tmdb.org/t/p/w500/path_to_the_image.jpg
      */
     var posterSizes: List<ImageWidth>
+
+    companion object {
+
+        val instance: AppConfig = DefaultAppConfig
+    }
 }
 
-object DefaultAppConfig : AppConfig {
+internal object DefaultAppConfig : AppConfig {
 
     override var language: String = "en-US"
 
