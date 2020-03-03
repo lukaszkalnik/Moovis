@@ -12,8 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: msfjarvis/setup-android@0.2
-        with:
-          gradleTasks: testDebug
+      - run: ./gradlew testDebug
         env:
           tmdb_api_key: '"TMDB_API_KEY"'
