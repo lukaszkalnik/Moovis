@@ -83,8 +83,8 @@ class MainViewModelTest {
         }
 
         coVerifySequence {
-            getPopularMovies(1)
             getConfiguration()
+            getPopularMovies(1)
         }
         verify { appConfig.imagesBaseUrl = baseUrl }
         verify {
