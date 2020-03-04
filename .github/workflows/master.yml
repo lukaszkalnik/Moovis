@@ -12,6 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: ./gradlew testDebug
+      - run: ./gradlew check
         env:
           tmdb_api_key: '"TMDB_API_KEY"'
