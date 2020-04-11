@@ -40,6 +40,10 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
+    lintOptions {
+        // Because of annotation-experimental
+        disable("UnsafeExperimentalUsageError", "UnsafeExperimentalUsageWarning")
+    }
 }
 
 tasks.withType<Test> {
@@ -52,13 +56,13 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutinesVersion}")
 
     implementation(project(":runtime-configuration"))
+    implementation(project(":util"))
 
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("com.google.android.material:material:1.2.0-alpha05")
 
-    val lifecycleVersion = "2.2.0"
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifecycleVersion}")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Version.lifecycleVersion}")
 
     implementation("com.github.bumptech.glide:glide:4.10.0")
 

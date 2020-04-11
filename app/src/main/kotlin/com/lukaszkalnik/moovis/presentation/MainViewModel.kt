@@ -46,20 +46,4 @@ class MainViewModel(
         super.onCleared()
         scope.cancel()
     }
-
-    class Factory(
-        private val getConfiguration: GetConfiguration,
-        private val getPopularMovies: GetPopularMovies,
-        private val appConfig: AppConfig,
-        private val toMovieTileItems: (MoviesPage, AppConfig) -> List<MovieTileItem>
-    ) : ViewModelProvider.Factory {
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T = MainViewModel(
-            getConfiguration,
-            getPopularMovies,
-            appConfig,
-            toMovieTileItems
-        ) as T
-    }
 }
