@@ -23,4 +23,8 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifecycleVersion}")
     implementation("androidx.fragment:fragment-ktx:1.2.4")
+
+    implementation("io.arrow-kt:arrow-core:${Version.arrowVersion}")
+    implementation("io.arrow-kt:arrow-syntax:${Version.arrowVersion}")
+    implementation("io.arrow-kt:arrow-meta:${Version.arrowVersion}")
 }

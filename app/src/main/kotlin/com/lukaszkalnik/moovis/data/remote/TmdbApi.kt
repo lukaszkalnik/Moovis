@@ -1,5 +1,6 @@
 package com.lukaszkalnik.moovis.data.remote
 
+import arrow.core.Either
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.lukaszkalnik.moovis.BuildConfig
 import com.lukaszkalnik.moovis.data.model.MoviesPage
@@ -23,14 +24,14 @@ private const val QUERY_REGION = "region"
 interface TmdbApi {
 
     @GET("configuration")
-    suspend fun getConfiguration(): TmdbConfiguration
+    suspend fun getConfiguration(): Either<Exception, TmdbConfiguration>
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query(QUERY_LANGUAGE) language: String,
         @Query(QUERY_PAGE) page: Int,
         @Query(QUERY_REGION) region: String
-    ): MoviesPage
+    ): Either<Exception, MoviesPage>
 
     companion object {
 
@@ -50,6 +51,7 @@ interface TmdbApi {
                 .baseUrl(TMDB_API_URL)
                 .client(authenticatedClient)
                 .addConverterFactory(Json.asConverterFactory(contentType))
+                .addCallAdapterFactory(EitherCallAdapterFactory())
                 .build()
                 .create(TmdbApi::class.java)
         }
