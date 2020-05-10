@@ -24,14 +24,14 @@ private const val QUERY_REGION = "region"
 interface TmdbApi {
 
     @GET("configuration")
-    suspend fun getConfiguration(): Either<Exception, TmdbConfiguration>
+    suspend fun getConfiguration(): Either<ApiError, TmdbConfiguration>
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query(QUERY_LANGUAGE) language: String,
         @Query(QUERY_PAGE) page: Int,
         @Query(QUERY_REGION) region: String
-    ): Either<Exception, MoviesPage>
+    ): Either<ApiError, MoviesPage>
 
     companion object {
 

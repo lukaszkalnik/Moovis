@@ -20,7 +20,7 @@ class MainViewModel(
     private val getPopularMovies: GetPopularMovies,
     private val appConfig: AppConfig,
     private val toMovieTileItems: (MoviesPage, AppConfig) -> List<MovieTileItem>,
-    private val scope: CoroutineScope = MainScope()
+    private val coroutineScope: CoroutineScope = MainScope()
 ) : ViewModel() {
 
     private val _moviesLiveData = MutableLiveData<List<MovieTileItem>>()
@@ -28,24 +28,25 @@ class MainViewModel(
     val movies: LiveData<List<MovieTileItem>> get() = _moviesLiveData
 
     init {
-        scope.launch {
-            getConfiguration().suspendFlatMap { configuration ->
-                with(configuration.images) {
-                    appConfig.imagesBaseUrl = secureBaseUrl
-                    appConfig.posterSizes = posterSizes.map { ImageWidth(it) }
-                }
-                getPopularMovies(1)
-            }.map { moviesPage ->
-                toMovieTileItems(moviesPage, appConfig)
-            }.fold(
-                ifLeft = { println("MainViewModel get config/movies error: $it") },
-                ifRight = { movieTileItems -> _moviesLiveData.postValue(movieTileItems) }
-            )
+        coroutineScope.launch {
+            getConfiguration()
+                .suspendFlatMap { configuration ->
+                    with(configuration.images) {
+                        appConfig.imagesBaseUrl = secureBaseUrl
+                        appConfig.posterSizes = posterSizes.map { ImageWidth(it) }
+                    }
+                    getPopularMovies(1)
+                }.map { moviesPage ->
+                    toMovieTileItems(moviesPage, appConfig)
+                }.fold(
+                    ifLeft = { println("MainViewModel get config/movies error: $it") },
+                    ifRight = { movieTileItems -> _moviesLiveData.postValue(movieTileItems) }
+                )
         }
     }
 
     override fun onCleared() {
         super.onCleared()
-        scope.cancel()
+        coroutineScope.cancel()
     }
 }

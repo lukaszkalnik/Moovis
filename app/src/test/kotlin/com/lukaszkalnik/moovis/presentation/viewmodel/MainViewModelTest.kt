@@ -1,7 +1,10 @@
 package com.lukaszkalnik.moovis.presentation.viewmodel
 
+import arrow.core.Either
+import arrow.core.Right
 import com.lukaszkalnik.moovis.data.model.MoviesPage
 import com.lukaszkalnik.moovis.data.model.TmdbConfiguration
+import com.lukaszkalnik.moovis.data.remote.ApiError
 import com.lukaszkalnik.moovis.presentation.MainViewModel
 import com.lukaszkalnik.moovis.presentation.model.MovieTileItem
 import com.lukaszkalnik.moovis.runtimeconfiguration.data.AppConfig
@@ -24,7 +27,7 @@ import org.junit.jupiter.api.extension.*
 @ExtendWith(InstantTaskExecutorExtension::class)
 class MainViewModelTest {
 
-    private val getConfiguration = mockk<SuspendFun<TmdbConfiguration>>()
+    private val getConfiguration = mockk<SuspendFun<Either<ApiError, TmdbConfiguration>>>()
 
     private val moviesPage = MoviesPage(
         page = 1,
@@ -35,8 +38,8 @@ class MainViewModelTest {
         totalResults = 10_000,
         totalPages = 100
     )
-    private val getPopularMovies = mockk<SuspendFun1<Int, MoviesPage>> getPopularMovies@{
-        coEvery { this@getPopularMovies.invoke(1) } returns moviesPage
+    private val getPopularMovies = mockk<SuspendFun1<Int, Either<ApiError, MoviesPage>>> getPopularMovies@{
+        coEvery { this@getPopularMovies.invoke(1) } returns Right(moviesPage)
     }
 
     private val appConfig = mockk<AppConfig>(relaxUnitFun = true)
@@ -69,7 +72,7 @@ class MainViewModelTest {
             every { images.secureBaseUrl } returns baseUrl
             every { images.posterSizes } returns posterSizes
         }
-        coEvery { getConfiguration() } returns configuration
+        coEvery { getConfiguration() } returns Right(configuration)
 
         val viewModel = MainViewModel(
             getConfiguration::invoke,

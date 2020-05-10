@@ -2,12 +2,13 @@ package com.lukaszkalnik.moovis.domain.usecase
 
 import arrow.core.Either
 import com.lukaszkalnik.moovis.data.model.MoviesPage
+import com.lukaszkalnik.moovis.data.remote.ApiError
 import com.lukaszkalnik.moovis.data.remote.TmdbApi
 
 /**
  * Get popular movies page for the given page number.
  */
-typealias GetPopularMovies = suspend (Int) -> Either<Exception, MoviesPage>
+typealias GetPopularMovies = suspend (Int) -> Either<ApiError, MoviesPage>
 
 fun getPopularMoviesFactory(
     tmdbApi: TmdbApi,
