@@ -13,7 +13,7 @@ import java.io.IOException
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
-class EitherCallAdapterFactory : CallAdapter.Factory() {
+internal class EitherCallAdapterFactory : CallAdapter.Factory() {
 
     override fun get(
         returnType: Type,
@@ -25,14 +25,17 @@ class EitherCallAdapterFactory : CallAdapter.Factory() {
 
         val responseType = getParameterUpperBound(0, returnType)
         if (getRawType(responseType) != Either::class.java) return null
-        check(responseType is ParameterizedType) { "Return type must be a parameterized type." }
+        check(responseType is ParameterizedType) { "Response type must be a parameterized type." }
+
+        val leftType = getParameterUpperBound(0, responseType)
+        if (getRawType(leftType) != ApiError::class.java) return null
 
         val rightType = getParameterUpperBound(1, responseType)
         return EitherCallAdapter<Any?>(rightType)
     }
 }
 
-class EitherCallAdapter<R>(
+private class EitherCallAdapter<R>(
     private val successType: Type
 ) : CallAdapter<R, Call<Either<ApiError, R?>>> {
 
@@ -41,7 +44,7 @@ class EitherCallAdapter<R>(
     override fun responseType(): Type = successType
 }
 
-internal class EitherCall<R>(
+private class EitherCall<R>(
     private val delegate: Call<R?>
 ) : Call<Either<ApiError, R?>> {
 
