@@ -31,41 +31,53 @@ internal class EitherCallAdapterFactory : CallAdapter.Factory() {
         if (getRawType(leftType) != ApiError::class.java) return null
 
         val rightType = getParameterUpperBound(1, responseType)
-        return EitherCallAdapter<Any?>(rightType)
+        return EitherCallAdapter<Any>(rightType)
     }
 }
 
 private class EitherCallAdapter<R>(
     private val successType: Type
-) : CallAdapter<R, Call<Either<ApiError, R?>>> {
+) : CallAdapter<R, Call<Either<ApiError, R>>> {
 
-    override fun adapt(call: Call<R?>): Call<Either<ApiError, R?>> = EitherCall(call)
+    override fun adapt(call: Call<R>): Call<Either<ApiError, R>> = EitherCall(call, successType)
 
     override fun responseType(): Type = successType
 }
 
 private class EitherCall<R>(
-    private val delegate: Call<R?>
-) : Call<Either<ApiError, R?>> {
+    private val delegate: Call<R>,
+    private val successType: Type
+) : Call<Either<ApiError, R>> {
 
-    override fun enqueue(callback: Callback<Either<ApiError, R?>>) = delegate.enqueue(
-        object : Callback<R?> {
+    override fun enqueue(callback: Callback<Either<ApiError, R>>) = delegate.enqueue(
+        object : Callback<R> {
 
-            override fun onResponse(call: Call<R?>, response: Response<R?>) {
-                with(response) {
-                    if (isSuccessful) {
-                        callback.onResponse(this@EitherCall, Response.success(Right(body())))
-                    } else {
-                        val errorBody = errorBody()?.string() ?: ""
-                        callback.onResponse(
-                            this@EitherCall,
-                            Response.success(Left(HttpError(code(), errorBody)))
-                        )
-                    }
+            override fun onResponse(call: Call<R>, response: Response<R>) {
+                callback.onResponse(this@EitherCall, Response.success(response.toEither()))
+            }
+
+            private fun Response<R>.toEither(): Either<ApiError, R> {
+                // Http error response (4xx - 5xx)
+                if (!isSuccessful) {
+                    val errorBody = errorBody()?.string() ?: ""
+                    return Left(HttpError(code(), errorBody))
+                }
+
+                // Http success response with body
+                body()?.let { body -> return Right(body) }
+
+                // if we defined Unit as success type it means we expected no response body
+                // e.g. in case of 204 No Content
+                return if (successType == Unit::class.java) {
+                    @Suppress("UNCHECKED_CAST")
+                    Right(Unit) as Either<ApiError, R>
+                } else {
+                    @Suppress("UNCHECKED_CAST")
+                    Left(UnknownError("Response body was null")) as Either<ApiError, R>
                 }
             }
 
-            override fun onFailure(call: Call<R?>, throwable: Throwable) {
+            override fun onFailure(call: Call<R>, throwable: Throwable) {
                 val error = when (throwable) {
                     is IOException -> NetworkError(throwable)
                     else -> UnknownApiError(throwable)
@@ -77,13 +89,13 @@ private class EitherCall<R>(
 
     override fun isExecuted(): Boolean = delegate.isExecuted
 
-    override fun clone(): Call<Either<ApiError, R?>> = EitherCall(delegate.clone())
+    override fun clone(): Call<Either<ApiError, R>> = EitherCall(delegate.clone(), successType)
 
     override fun isCanceled(): Boolean = delegate.isCanceled
 
     override fun cancel() = delegate.cancel()
 
-    override fun execute(): Response<Either<ApiError, R?>> = throw UnsupportedOperationException()
+    override fun execute(): Response<Either<ApiError, R>> = throw UnsupportedOperationException()
 
     override fun request(): Request = delegate.request()
 }
