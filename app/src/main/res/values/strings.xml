@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Moovis</string>
+
+    <string name="movie_tile_popularity">Popularity: %.3f</string>
 </resources>

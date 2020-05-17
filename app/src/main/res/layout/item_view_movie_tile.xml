@@ -16,23 +16,19 @@
         android:id="@+id/movie_tile_popularity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        tools:text="20.3455" />
-
-    <ImageView
-        android:id="@+id/movie_tile_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@null" />
+        tools:text="Popularity: 20.3455" />
 
     <TextView
         android:id="@+id/movie_tile_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:lines="9"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        tools:drawableLeft="@android:drawable/ic_menu_camera"
+        tools:drawablePadding="8dp"
         tools:text="This is a sample movie description which can be pretty long." />
 
 </LinearLayout>

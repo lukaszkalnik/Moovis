@@ -23,6 +23,7 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifecycleVersion}")
     implementation("androidx.fragment:fragment-ktx:1.2.4")
+    implementation("androidx.recyclerview:recyclerview:1.1.0")
 
     implementation("io.arrow-kt:arrow-core:${Version.arrowVersion}")
     implementation("io.arrow-kt:arrow-syntax:${Version.arrowVersion}")
