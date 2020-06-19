@@ -22,8 +22,8 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifecycleVersion}")
-    implementation("androidx.fragment:fragment-ktx:1.2.4")
-    implementation("androidx.recyclerview:recyclerview:1.1.0")
+    implementation("androidx.fragment:fragment-ktx:1.3.0-alpha06")
+    implementation("androidx.recyclerview:recyclerview:1.2.0-alpha03")
 
     implementation("io.arrow-kt:arrow-core:${Version.arrowVersion}")
     implementation("io.arrow-kt:arrow-syntax:${Version.arrowVersion}")

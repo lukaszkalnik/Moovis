@@ -6,7 +6,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("android.extensions")
-    kotlin("plugin.serialization") version "1.3.71"
+    kotlin("plugin.serialization") version "1.3.72"
     kotlin("kapt")
 }
 
@@ -63,17 +63,17 @@ dependencies {
     implementation(project(":runtime-configuration"))
     implementation(project(":util"))
 
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("com.google.android.material:material:1.2.0-alpha06")
+    implementation("androidx.appcompat:appcompat:1.3.0-alpha01")
+    implementation("com.google.android.material:material:1.3.0-alpha01")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifecycleVersion}")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Version.lifecycleVersion}")
 
-    implementation("com.github.bumptech.glide:glide:4.10.0")
+    implementation("com.github.bumptech.glide:glide:4.11.0")
 
-    implementation("com.squareup.retrofit2:retrofit:2.7.1")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.4.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.4.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.5.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.7.2")
 
     implementation("io.arrow-kt:arrow-core:${Version.arrowVersion}")
     implementation("io.arrow-kt:arrow-syntax:${Version.arrowVersion}")
@@ -81,9 +81,9 @@ dependencies {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
-    testImplementation("io.mockk:mockk:1.9.3")
-    testImplementation("org.assertj:assertj-core:3.14.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.7.0-M1")
+    testImplementation("io.mockk:mockk:1.10.0")
+    testImplementation("org.assertj:assertj-core:3.16.1")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Version.coroutinesVersion}")
     testImplementation("androidx.arch.core:core-testing:2.1.0")
 }
